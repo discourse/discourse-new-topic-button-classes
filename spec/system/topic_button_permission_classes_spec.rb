@@ -32,7 +32,7 @@ RSpec.describe "New Topic Button Permission Classes", system: true do
 
     it "adds can-create-topic class when user can create topics" do
       visit("/latest")
-      expect(page).to have_css(".create-topic.can-create-topic")
+      expect(page).to have_css("#create-topic.can-create-topic")
     end
 
     context "when default_subcategory_on_read_only_category setting enabled and can't post on parent category" do
@@ -42,7 +42,7 @@ RSpec.describe "New Topic Button Permission Classes", system: true do
         it "adds can-create-topic class" do
           category_page.visit(private_category)
 
-          expect(page).to have_css(".create-topic.can-create-topic")
+          expect(page).to have_css("#create-topic.can-create-topic")
         end
       end
     end
@@ -50,7 +50,8 @@ RSpec.describe "New Topic Button Permission Classes", system: true do
     context "when category has no subcategory where user can post" do
       it "adds cannot-create-topic class to the button" do
         category_page.visit(category_with_no_subcategory)
-        expect(page).to have_css(".create-topic.cannot-create-topic")
+        # pause_test
+        expect(page).to have_css("#create-topic.cannot-create-topic")
       end
     end
 
@@ -74,7 +75,7 @@ RSpec.describe "New Topic Button Permission Classes", system: true do
 
       it "adds cannot-create-topic class to the button" do
         visit("/tag/#{staff_tag.name}")
-        expect(page).to have_css(".create-topic.cannot-create-topic")
+        expect(page).to have_css("#create-topic.cannot-create-topic")
       end
     end
   end
