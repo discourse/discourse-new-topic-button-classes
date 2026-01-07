@@ -1,19 +1,22 @@
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer("1.14.0", (api) => {
-  api.registerValueTransformer("create-topic-button-class", ({ context }) => {
+  api.registerValueTransformer("create-topic-button-class", ({ value, context }) => {
     const { disabled, category, tag } = context;
 
     const currentUser = api.container.lookup("service:current-user");
     const siteSettings = api.container.lookup("service:site-settings");
 
     if (disabled !== undefined) {
-      return disabled ? "cannot-create-topic" : "can-create-topic";
+      const className = disabled ? "cannot-create-topic" : "can-create-topic";
+      value.push(className);
+      return value;
     }
 
     const tagRestricted = tag?.staff || false;
     if (tagRestricted && !currentUser?.staff) {
-      return "cannot-create-topic";
+      value.push("cannot-create-topic");
+      return value;
     }
 
     if (category) {
@@ -28,10 +31,12 @@ export default apiInitializer("1.14.0", (api) => {
       }
 
       if (!canPost) {
-        return "cannot-create-topic";
+        value.push("cannot-create-topic");
+        return value;
       }
     }
 
-    return "can-create-topic";
+    value.push("can-create-topic");
+    return value;
   });
 });
