@@ -5,6 +5,7 @@ RSpec.describe "New Topic Button Permission Classes", system: true do
 
   fab!(:group)
   fab!(:user) { Fabricate(:user, trust_level: 1, groups: [group]) }
+  fab!(:admin)
   fab!(:private_category) do
     c = Fabricate(:category_with_definition)
     c.set_permissions(group => :readonly)
