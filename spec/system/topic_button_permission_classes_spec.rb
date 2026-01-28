@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe "New Topic Button Permission Classes", system: true do
-  let!(:theme) { upload_theme_component }
+  let(:theme) { Fabricate(:theme) }
+  let!(:component) { upload_theme_component(parent_theme_id: theme.id) }
 
   fab!(:group)
   fab!(:user) { Fabricate(:user, trust_level: 1, groups: [group]) }
