@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "New Topic Button Permission Classes", system: true do
-  let(:theme) { Fabricate(:theme) }
-  let!(:component) { upload_theme_component(parent_theme_id: theme.id) }
+  let!(:theme) { upload_theme_component }
 
   fab!(:group)
   fab!(:user) { Fabricate(:user, trust_level: 1, groups: [group]) }
@@ -52,7 +51,7 @@ RSpec.describe "New Topic Button Permission Classes", system: true do
     context "when category has no subcategory where user can post" do
       it "adds cannot-create-topic class to the button" do
         category_page.visit(category_with_no_subcategory)
-        # pause_test
+
         expect(page).to have_css("#create-topic.cannot-create-topic")
       end
     end
